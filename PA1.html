@@ -64,21 +64,37 @@ img {
 </div>
 
 
-<div id="loading-and-preprocessing-the-data" class="section level2">
-<h2>Loading and preprocessing the data</h2>
-<p>Check for the <code>data</code> directory and create it if necessary. This directory is ignored by git, so that we don’t commit both the zipped and unzipped data.</p>
+<p>Before beginning, we set the global options for the file.</p>
+<pre class="r"><code>library('knitr')
+# set global options for this document
+opts_chunk$set(echo=TRUE, results=&quot;asis&quot;)</code></pre>
+<hr />
+<div id="part-i-loading-and-preprocessing-the-data" class="section level2">
+<h2>Part I: Loading and preprocessing the data</h2>
+<p>Check for the <code>data</code> directory and create it if necessary.</p>
 <pre class="r"><code>if (!file.exists(&quot;data&quot;)) {
   dir.create(&quot;data&quot;)
 }</code></pre>
+<p>This directory is ignored by git, so that we don’t commit both the zipped and unzipped data.</p>
 <p>If the zipfile exists but hasn’t been extracted, extract it.</p>
 <pre class="r"><code>if (!file.exists(&quot;data/activity.csv&quot;)) {
   unzip(&quot;activity.zip&quot;, exdir=&quot;data&quot;, overwrite=FALSE)
 }</code></pre>
 <p>Read in the data from the file.</p>
 <pre class="r"><code>data &lt;- read.csv(&quot;data/activity.csv&quot;)</code></pre>
+<hr />
 </div>
-<div id="what-is-mean-total-number-of-steps-taken-per-day" class="section level2">
-<h2>What is mean total number of steps taken per day?</h2>
+<div id="part-ii-what-is-mean-total-number-of-steps-taken-per-day" class="section level2">
+<h2>Part II: What is mean total number of steps taken per day?</h2>
+<blockquote>
+<p>For this part of the assignment, you can ignore the missing values in the dataset.</p>
+</blockquote>
+<div id="make-a-histogram-of-the-total-number-of-steps-taken-each-day" class="section level3">
+<h3>Make a histogram of the total number of steps taken each day</h3>
+</div>
+<div id="calculate-and-report-the-mean-and-median-total-number-of-steps-taken-per-day" class="section level3">
+<h3>Calculate and report the mean and median total number of steps taken per day</h3>
+</div>
 </div>
 <div id="what-is-the-average-daily-activity-pattern" class="section level2">
 <h2>What is the average daily activity pattern?</h2>
