@@ -8,9 +8,13 @@ output:
 Before beginning, we set the global options for the file.
 ```{r echo=TRUE}
 library('knitr')
-# set global options for this document
+library('ggplot2')
+
 opts_chunk$set(echo=TRUE, results="asis")
 ```
+
+
+
 
 ---
 
@@ -37,14 +41,58 @@ Read in the data from the file.
 data <- read.csv("data/activity.csv")
 ```
 
+
+
+
 ---
 
 ## Part II: What is mean total number of steps taken per day?
+
 > For this part of the assignment, you can ignore the missing values in the dataset.
+
 
 ### Make a histogram of the total number of steps taken each day
 
+To prepare the histogram, we first need to aggregate the steps by date.
+
+```{r}
+daily_steps <- aggregate(steps ~ date, data = data, sum)
+```
+
+Note that aggregate throws out the days for which there is `NA` data - there are 61 unique days in the dataset, but only 53 of them have steps logged.
+
+Then we can produce the histogram.  Setting the bin width to 500 gives a clearer picture of the distribution.
+
+```{r steps_per_day_histogram}
+ggplot(data = daily_steps, aes(daily_steps$steps)) +
+      geom_histogram(binwidth = 500) +
+      ggtitle('Days with Step Count') +
+      xlab('Steps') +
+      ylab('Days')
+```
+
+
 ### Calculate and report the mean and median total number of steps taken per day
+
+Using the aggreated data, we can calculate the mean (rounded to two decimal places)
+
+```{r results='hide'}
+steps_mean <- format(mean(daily_steps$steps), nsmall=2)
+```
+
+and the median
+
+```{r results='hide'}
+steps_median <- median(daily_steps$steps)
+```
+
+and report the figures.
+
+The mean daily step count is __`r steps_mean`__ steps per day, and the median daily step count is __`r steps_median`__ steps per day.
+
+
+
+---
 
 ## What is the average daily activity pattern?
 
