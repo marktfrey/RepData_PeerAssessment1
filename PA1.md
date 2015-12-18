@@ -209,7 +209,7 @@ print(xt, type = "html", html.table.attributes = "width=100% border=0")
 ```
 
 <!-- html table generated in R 3.2.2 by xtable 1.8-0 package -->
-<!-- Fri Dec 18 11:42:37 2015 -->
+<!-- Fri Dec 18 11:53:38 2015 -->
 <table width=100% border=0>
 <tr> <th>  </th> <th> steps </th> <th> date </th> <th> interval </th> <th> steps_gmean </th> <th> steps_gmedian </th> <th> steps_imean </th>  </tr>
   <tr> <td align="right"> 1 </td> <td align="right">  </td> <td> 2012-10-01 </td> <td align="right">   0 </td> <td align="right"> 37.38 </td> <td align="right"> 0.00 </td> <td align="right"> 1.72 </td> </tr>
@@ -316,7 +316,7 @@ facetable_plot <- ggplot(data = interval_means_with_day_type,
                         xlab('Interval') +
                         ylab('Mean Steps')
 
-facetable_plot + facet_grid(. ~ day_type)
+facetable_plot + facet_wrap(~ day_type, ncol = 1)
 ```
 
 ![](PA1_files/figure-html/interval_mean_by_day_type_lines-1.png) 

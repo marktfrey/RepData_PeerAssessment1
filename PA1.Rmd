@@ -278,7 +278,7 @@ facetable_plot <- ggplot(data = interval_means_with_day_type,
                         xlab('Interval') +
                         ylab('Mean Steps')
 
-facetable_plot + facet_grid(. ~ day_type)
+facetable_plot + facet_wrap(~ day_type, ncol = 1)
 ```
 
 Observing the charts, we can see that on weekdays there is a more-active early-day period (perhaps this person walks or runs before going to work), and on weekends there seems to be more consistent activity throughout the day (whereas the activity in the weekdays seems to be broken up into chunks - maybe exercise, commute, lunch, break, commute.  This is purely speculative, but is a plausible explanation for the observed peaks/valleys in weekday activity).
