@@ -209,7 +209,7 @@ print(xt, type = "html", html.table.attributes = "width=100% border=0")
 ```
 
 <!-- html table generated in R 3.2.2 by xtable 1.8-0 package -->
-<!-- Fri Dec 18 11:03:17 2015 -->
+<!-- Fri Dec 18 11:42:37 2015 -->
 <table width=100% border=0>
 <tr> <th>  </th> <th> steps </th> <th> date </th> <th> interval </th> <th> steps_gmean </th> <th> steps_gmedian </th> <th> steps_imean </th>  </tr>
   <tr> <td align="right"> 1 </td> <td align="right">  </td> <td> 2012-10-01 </td> <td align="right">   0 </td> <td align="right"> 37.38 </td> <td align="right"> 0.00 </td> <td align="right"> 1.72 </td> </tr>
@@ -283,4 +283,42 @@ We can see from observing the plots that all three methods of imputing the `NA` 
 If I were to choose one of the three methods, imputing using the daily mean for the specific interval for which data was missing would probably be the best model.
 
 
+
+---
+
 ## Are there differences in activity patterns between weekdays and weekends?
+
+> Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
+
+
+```r
+data$day_of_week <- weekdays(as.Date(strptime(data$date, '%Y-%m-%d')))
+data$day_type <- as.factor(sapply(data$day_of_week, function(x){ if (is.element(x, c("Saturday", "Sunday"))){ "weekend" } else { "weekday" }}))
+```
+
+> Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
+
+
+```r
+interval_means_with_day_type <- aggregate(steps ~ interval + day_type, data = data, mean)
+```
+
+Then plot the means as lines, faceting the plots by the day type.
+
+
+```r
+facetable_plot <- ggplot(data = interval_means_with_day_type,
+                         aes(y = interval_means_with_day_type$steps,
+                             x = interval_means_with_day_type$interval)
+                        ) +
+                        geom_line() +
+                        ggtitle('Mean Daily Steps/Interval\nby day type') +
+                        xlab('Interval') +
+                        ylab('Mean Steps')
+
+facetable_plot + facet_grid(. ~ day_type)
+```
+
+![](PA1_files/figure-html/interval_mean_by_day_type_lines-1.png) 
+
+Observing the charts, we can see that on weekdays there is a more-active early-day period (perhaps this person walks or runs before going to work), and on weekends there seems to be more consistent activity throughout the day (whereas the activity in the weekdays seems to be broken up into chunks - maybe exercise, commute, lunch, break, commute.  This is purely speculative, but is a plausible explanation for the observed peaks/valleys in weekday activity).
